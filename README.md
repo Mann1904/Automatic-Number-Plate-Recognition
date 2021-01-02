@@ -120,7 +120,6 @@ python detect.py --weights ./checkpoints/custom-416.tflite --size 416 --model yo
 ## YOLOv4 Using TensorRT
 Can also implement YOLOv4 using TensorFlow's TensorRT. TensorRT is a high-performance inference optimizer and runtime that can be used to perform inference in lower precision (FP16 and INT8) on GPUs. TensorRT can allow up to 8x higher performance than regular TensorFlow.
 
-# yolov4
 ```
 python save_model.py --weights ./data/custom.weights --output ./checkpoints/custom.tf --input_size 416 --model yolov4
 python convert_trt.py --weights ./checkpoints/custom.tf --quantize_mode float16 --output ./checkpoints/custom-trt-fp16-416
