@@ -49,10 +49,8 @@ python detect_video.py --weights ./checkpoints/custom-416 --size 416 --model yol
 ```
 
 ### Resulting Image Example
-The output from the above command should print any license plate numbers found to your command terminal as well as output and save the following image to the `detections` folder.
-<p align="center"><img src="data/helpers/lpr_demo.png" width="640"\></p>
 
-You should be able to see the license plate number printed on the screen above the bounding box found by YOLOv4.
+<p align="center"><img src="data/helpers/lpr_demo.png" width="640"\></p>
 
 ### Behind the Scenes
 This section will highlight the steps I took in order to implement the License Plate Recognition with YOLOv4 and potential areas to be worked on further.
@@ -60,28 +58,36 @@ This section will highlight the steps I took in order to implement the License P
 This demo will be showing the step-by-step workflow on the following original image.
 <p align="center"><img src="data/images/car2.jpg" width="640"\></p>
 
-#### Step 1 :  Taking the bounding box coordinates from YOLOv4 and simply taking the subimage region within the bounds of the box. Since this image is super small the majority of the time we use cv2.resize() to blow the image up 3x its original size. 
+### Step 1 : 
+Taking the bounding box coordinates from YOLOv4 and simply taking the subimage region within the bounds of the box. Since this image is super small the majority of the time we use cv2.resize() to blow the image up 3x its original size. 
 <p align="center"><img src="data/helpers/subimage.png" width="400"\></p>
 
-#### Step 2 : convert the image to grayscale and apply a small Gaussian blur to smooth it out.
+### Step 2 : 
+Convert the image to grayscale and apply a small Gaussian blur to smooth it out.
 <p align="center"><img src="data/helpers/gray.png" width="400"\></p>
 
-#### Step 3 : The image is thresholded to white text with black background and has Otsu's method also applied. This white text on black background helps to find contours of image.
+### Step 3 : 
+The image is thresholded to white text with black background and has Otsu's method also applied. This white text on black background helps to find contours of image.
 <p align="center"><img src="data/helpers/threshold.png" width="400"\></p>
 
-#### Step 4 : The image is then dilated using opencv in order to make contours more visible and be picked up in future step.
+### Step 4 : 
+The image is then dilated using opencv in order to make contours more visible and be picked up in future step.
 <p align="center"><img src="data/helpers/dilation.png" width="400"\></p>
 
-#### Step 5 : Next we use opencv to find all the rectangular shaped contours on the image and sort them left to right.
+### Step 5 : 
+Next we use opencv to find all the rectangular shaped contours on the image and sort them left to right.
 <p align="center"><img src="data/helpers/contours.png" width="400"\></p>
 
-#### Step 6 : As you can see this causes many contours to be found other than just the contours of each character within the license plate number. In order to filter out the unwanted regions we apply a couple parameters to be met in order to accept a contour. These parameters are just height and width ratios (i.e. the height of region must be at least 1/6th of the total height of the image). A couple other parameters on area of region etc are also placed. Check out code to see exact details. This filtering leaves us with.
+### Step 6 : 
+As you can see this causes many contours to be found other than just the contours of each character within the license plate number. In order to filter out the unwanted regions we apply a couple parameters to be met in order to accept a contour. These parameters are just height and width ratios (i.e. the height of region must be at least 1/6th of the total height of the image). A couple other parameters on area of region etc are also placed. Check out code to see exact details. This filtering leaves us with.
 <p align="center"><img src="data/helpers/final.png" width="400"\></p>
 
-#### Step 7 : The individual characters of the license plate number are now the only regions of interest left. We segment each subimage and apply a bitwise_not mask to flip the image to black text on white background which Tesseract is more accurate with. The final step is applying a small median blur on the image and then it is passed to Tesseract to get the letter or number from it. Example of how letters look like when going to tesseract.
+### Step 7 : 
+The individual characters of the license plate number are now the only regions of interest left. We segment each subimage and apply a bitwise_not mask to flip the image to black text on white background which Tesseract is more accurate with. The final step is applying a small median blur on the image and then it is passed to Tesseract to get the letter or number from it. Example of how letters look like when going to tesseract.
 <p align="center"><img src="data/helpers/string.png" width="650"\></p>
 
-#### Step 8 : Each letter or number is then just appended together into a string and at the end you get the full license plate that is recognized! BOOM!
+### Step 8 : 
+Each letter or number is then just appended together into a string and at the end you get the full license plate that is recognized! BOOM!
 
 ### Running License Plate Recognition on Video
 Running the license plate recognition straight on video at the same time that YOLOv4 object detections causes a few issues. Tesseract OCR is fairly expensive in terms of time complexity and slows down the processing of the video to a snail's pace. It can still be accomplished by adding the `--plate` command line flag to any detect_video.py commands.
