@@ -1,4 +1,4 @@
-#Automatic Number Plate Recognition (ANPR)
+# Automatic Number Plate Recognition (ANPR)
 Automatic Number Plate Recognition (ANPR) is a system capable of reading vehicle number plates without human intervention through the use of high speed image capture with supporting illumination, detection of characters within the images provided, verification of the character sequences as being those from a vehicle license plate, character recognition to convert image to text; so ending up with a set of metadata that identifies an image containing a vehicle license plate and the associated decoded text of that plate.
 
 ## Getting Started
@@ -166,8 +166,3 @@ python save_model.py --weights ./data/custom.weights --output ./checkpoints/cust
 python convert_trt.py --weights ./checkpoints/custom.tf --quantize_mode float16 --output ./checkpoints/custom-trt-fp16-416
 python detect.py --weights ./checkpoints/custom-trt-fp16-416 --model yolov4 --images ./data/images/car.jpg --framework trt
 ```
-
-### References  
-
-   Huge shoutout goes to theAIGuysCode for creating the backbone of this repository:
-  * [tensorflow-yolov4-tflite](https://github.com/theAIGuysCode/yolov4-custom-functions)
