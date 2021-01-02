@@ -53,18 +53,6 @@ python detect_video.py --weights ./checkpoints/custom-416 --size 416 --model yol
 python detect_video.py --weights ./checkpoints/custom-416 --size 416 --model yolov4 --video 0 --output ./detections/results.avi
 ```
 
-### Crop Detections and Save Them as New Images
-I have created a custom function within the file [core/functions.py](https://github.com/theAIGuysCode/yolov4-custom-functions/blob/master/core/functions.py) that can be applied to any detect.py or detect_video.py commands in order to crop the YOLOv4 detections and save them each as their own new image. To crop detections all you need to do is add the `--crop` flag to any command. The resulting cropped images will be saved within the <strong>detections/crop/</strong> folder.
-  
- Example of crop flag added to command:
-```
-python detect.py --weights ./checkpoints/yolov4-416 --size 416 --model yolov4 --images ./data/images/dog.jpg --crop
-```
- Here is an example of one of the resulting cropped detections from the above command.
- <p align="center"><img src="data/helpers/crop_example.png" height="250"\></p>
- 
-<a name="license"/>
-
 ## License Plate Recognition Using Tesseract OCR
 I have created a custom function to feed Tesseract OCR the bounding box regions of license plates found by my custom YOLOv4 model in order to read and extract the license plate numbers. Thorough preprocessing is done on the license plate in order to correctly extract the license plate number from the image. The function that is in charge of doing the preprocessing and text extraction is called <strong>recognize_plate</strong> and can be found in the file [core/utils.py](https://github.com/theAIGuysCode/yolov4-custom-functions/blob/master/core/utils.py).
 
@@ -162,6 +150,7 @@ You can find the outputted image(s) showing the detections saved within the 'det
 Can also implement YOLOv4 using TensorFlow's TensorRT. TensorRT is a high-performance inference optimizer and runtime that can be used to perform inference in lower precision (FP16 and INT8) on GPUs. TensorRT can allow up to 8x higher performance than regular TensorFlow.
 
 # yolov4
+```
 python save_model.py --weights ./data/custom.weights --output ./checkpoints/custom.tf --input_size 416 --model yolov4
 python convert_trt.py --weights ./checkpoints/custom.tf --quantize_mode float16 --output ./checkpoints/custom-trt-fp16-416
 python detect.py --weights ./checkpoints/custom-trt-fp16-416 --model yolov4 --images ./data/images/car.jpg --framework trt
