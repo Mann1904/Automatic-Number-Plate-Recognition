@@ -31,7 +31,6 @@ Copy and paste your custom .weights file into the 'data' folder and copy and pas
 
 The only change within the code you need to make in order for your custom model to work is on line 14 of 'core/config.py' file.
 Update the code to point at your custom .names file as seen below. (my custom .names file is called custom.names but yours might be named differently)
-<p align="center"><img src="data/helpers/custom_config.png" width="640"\></p>
 
 ## Custom YOLOv4 Using TensorFlow
 The following commands will allow you to run your custom yolov4 model. (video and webcam commands work as well)
