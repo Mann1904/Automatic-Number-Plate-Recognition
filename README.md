@@ -44,35 +44,13 @@ The following commands will allow you to run your custom yolov4 model. (video an
 python save_model.py --weights ./data/custom.weights --output ./checkpoints/custom-416 --input_size 416 --model yolov4 
 
 # Run custom yolov4 tensorflow model
-python detect.py --weights ./checkpoints/custom-416 --size 416 --model yolov4 --images ./data/images/car.jpg
+python detect.py --weights ./checkpoints/custom-416 --size 416 --model yolov4 --images ./data/images/car.jpg --plate
 
 # Run yolov4 on video
-python detect_video.py --weights ./checkpoints/custom-416 --size 416 --model yolov4 --video ./data/video/licence_plate.mp4 --output ./detections/results.avi
+python detect_video.py --weights ./checkpoints/custom-416 --size 416 --model yolov4 --video ./data/video/licence_plate.mp4 --output ./detections/results.avi --plate
 
 # Run yolov4 on webcam
-python detect_video.py --weights ./checkpoints/custom-416 --size 416 --model yolov4 --video 0 --output ./detections/results.avi
-```
-
-## License Plate Recognition Using Tesseract OCR
-I have created a custom function to feed Tesseract OCR the bounding box regions of license plates found by my custom YOLOv4 model in order to read and extract the license plate numbers. Thorough preprocessing is done on the license plate in order to correctly extract the license plate number from the image. The function that is in charge of doing the preprocessing and text extraction is called <strong>recognize_plate</strong> and can be found in the file [core/utils.py](https://github.com/theAIGuysCode/yolov4-custom-functions/blob/master/core/utils.py).
-
-<strong>Disclaimer: In order to run tesseract OCR you must first download the binary files and set them up on your local machine. Please do so before proceeding or commands will not run as expected!</strong>
-
-Official Tesseract OCR Github Repo: [tesseract-ocr/tessdoc](https://github.com/tesseract-ocr/tessdoc)
-
-Great Article for How To Install Tesseract on Mac or Linux Machines: [PyImageSearch Article](https://www.pyimagesearch.com/2017/07/03/installing-tesseract-for-ocr/)
-
-For Windows I recommend: [Windows Install](https://github.com/UB-Mannheim/tesseract/wiki)
-
-Once you have Tesseract properly installed you can move onwards. If you don't have a trained YOLOv4 model to detect license plates feel free to use one that I have trained. It is not perfect but it works well. [Download license plate detector model and learn how to save and run it with TensorFlow here](#custom)
-
-### Running License Plate Recognition on Images (video example below)
-The license plate recognition works wonders on images. All you need to do is add the `--plate` flag on top of the command to run the custom YOLOv4 model.
-
-Try it out on this image in the repository!
-```
-# Run License Plate Recognition
-python detect.py --weights ./checkpoints/custom-416 --size 416 --model yolov4 --images ./data/images/car2.jpg --plate
+python detect_video.py --weights ./checkpoints/custom-416 --size 416 --model yolov4 --video 0 --output ./detections/results.avi --plate
 ```
 
 ### Resulting Image Example
@@ -125,7 +103,7 @@ The recommended route I think is more efficient is using this command. Customize
 python detect_video.py --weights ./checkpoints/custom-416 --size 416 --model yolov4 --video ./data/video/license_plate.mp4 --output ./detections/recognition.avi --crop
 ```
 
-Now play around with [license_plate_recognizer.py](https://github.com/theAIGuysCode/yolov4-custom-functions/blob/master/license_plate_recognizer.py) and have some fun!
+Now play around with [license_plate_recognizer.py](https://github.com/Mann1904/Automatic-Number-Plate-Recognition/blob/master/license_plate_recognizer.py) and have some fun!
 
 <a name="ocr"/>
 
@@ -142,9 +120,6 @@ python convert_tflite.py --weights ./checkpoints/custom-416 --output ./checkpoin
 # Run tflite model
 python detect.py --weights ./checkpoints/custom-416.tflite --size 416 --model yolov4 --images ./data/images/car.jpg --framework tflite
 ```
-### Result Image (TensorFlow Lite)
-You can find the outputted image(s) showing the detections saved within the 'detections' folder.
-
 
 ## YOLOv4 Using TensorRT
 Can also implement YOLOv4 using TensorFlow's TensorRT. TensorRT is a high-performance inference optimizer and runtime that can be used to perform inference in lower precision (FP16 and INT8) on GPUs. TensorRT can allow up to 8x higher performance than regular TensorFlow.
